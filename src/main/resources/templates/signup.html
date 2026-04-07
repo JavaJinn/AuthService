@@ -1,74 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Signup Form</title>
-  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-  <link rel="stylesheet" href="/css/style.css">
-  <script src="/js/signup.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | JavaJinn Auth Service</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js" defer></script>
+    <script th:src="@{/js/signup.js}" defer></script>
 </head>
-<body>
-  <section>
-    <form action="/req/signup" method="post">
-      <h1>Sign Up</h1>
-        <div class="inputbox">
-            <ion-icon name="person-outline"></ion-icon>
-            <input type="text" id= "username" name="username" required>
-            <label for="">Name</label>
+<body class="auth-page">
+<section class="auth-shell">
+    <div class="brand-panel">
+        <span class="eyebrow">Portfolio Project</span>
+        <h1>Create your account</h1>
+        <p>The signup page now connects cleanly to login and persists new users securely in PostgreSQL.</p>
+        <ul class="feature-list">
+            <li>Validation on server side</li>
+            <li>BCrypt password hashing</li>
+            <li>Default ROLE_USER assignment</li>
+        </ul>
+    </div>
+
+    <form class="auth-card" th:action="@{/signup}" th:object="${signupRequest}" method="post" novalidate>
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <div>
+            <h2>Sign up</h2>
+            <p class="muted">Build a solid auth foundation you can expand later.</p>
         </div>
-        <div class="inputbox">
-            <ion-icon name="mail-outline"></ion-icon>
-            <input type="email" id="email" name="email" required>
-            <label for="">Email</label>
-        </div>
-        
-        <div class="inputbox">
-            <ion-icon name="lock-closed-outline"></ion-icon>
-            <input type="password" id="password" name="password" required>
-            <label for="">Password</label>
-        </div>  
-        <div class="inputbox">
-          <ion-icon name="lock-closed-outline"></ion-icon>
-          <input type="password" id="passwordcon" name="passwordcon" required>
-          <label for="">Confirm Password</label>
-      </div>  
-        <button id= "submit" type="submit">Sign Up</button>
-      <div class="register">
-        <p>Already have an account? <a href="">Log In</a></p>
-      </div>
+
+        <div class="alert error" th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
+
+        <label class="input-group">
+            <span>Username</span>
+            <div class="inputbox">
+                <ion-icon name="person-outline"></ion-icon>
+                <input th:field="*{username}" type="text" autocomplete="username" required>
+            </div>
+            <small class="field-error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
+        </label>
+
+        <label class="input-group">
+            <span>Email</span>
+            <div class="inputbox">
+                <ion-icon name="mail-outline"></ion-icon>
+                <input th:field="*{email}" type="email" autocomplete="email" required>
+            </div>
+            <small class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+        </label>
+
+        <label class="input-group">
+            <span>Password</span>
+            <div class="inputbox">
+                <ion-icon name="lock-closed-outline"></ion-icon>
+                <input th:field="*{password}" id="password" type="password" autocomplete="new-password" required>
+            </div>
+            <small class="field-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
+        </label>
+
+        <label class="input-group">
+            <span>Confirm password</span>
+            <div class="inputbox">
+                <ion-icon name="shield-checkmark-outline"></ion-icon>
+                <input th:field="*{confirmPassword}" id="confirmPassword" type="password" autocomplete="new-password" required>
+            </div>
+            <small class="field-error" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></small>
+            <small class="field-hint" id="password-match-message"></small>
+        </label>
+
+        <button type="submit">Create account</button>
+
+        <p class="register">Already have an account? <a th:href="@{/login}">Back to login</a></p>
     </form>
-  </section>
+</section>
 </body>
 </html>
-<script>
-  const submitButttom = document.getElementById("submit");
-  submitButttom.addEventListener('click',()=>{
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('passwordcon').value;
-    const email = document.getElementById('email').value;
-    const data ={
-      username,
-      email,
-      password
-    }
-    
-    if(password == confirmPassword){
-      const jsonData = JSON.stringify(data);
-      fetch('/req/signup', {
-        method: 'POST',
-        headers:{
-          'Content-Type': 'application/json'
-        },
-        body: jsonData
-      })
-      .then(response =>{
-        //alert('succesfull');
-        //if(response.status == 200){
-          //alert('succesfull');
-        //xs}
-      })
-    }
-    
-  })

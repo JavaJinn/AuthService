@@ -1,21 +1,38 @@
 spring:
-    web:
-        error:
-            include-message: always
-            include-binding-errors: always
-    datasource:
-        url: jdbc:postgresql://localhost:5432/authdb
-        username: ${DB_USERNAME}
-        password: ${DB_PASSWORD}
-        driver-class-name: org.postgresql.Driver
-    jpa:
-        hibernate:
-            ddl-auto: validate
-        properties:
-            hibernate:
-                "[format_sql]": true
-                "[show_sql]": true
-                dialect: org.hibernate.dialect.PostgreSQLDialect
-    flyway:
-        enabled: true
+  application:
+    name: auth-service
 
+  datasource:
+    url: ${DB_URL:}
+    username: ${DB_USERNAME:}
+    password: ${DB_PASSWORD:}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc.time_zone: UTC
+
+  flyway:
+    enabled: true
+
+  thymeleaf:
+    cache: false
+    
+  web:
+    resources:
+      cache:
+        period: 0
+
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+
+logging:
+  level:
+    org.springframework.security: INFO

@@ -4,6 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 *.class
+README.md
 
 ### VS Code ###
 .vscode/

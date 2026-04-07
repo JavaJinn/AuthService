@@ -2,38 +2,60 @@ package com.javajinn.auth_service.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.javajinn.auth_service.service.AppUserDetailsService;
 
 @Configuration
-@EnableWebSecurity
 public class SecurityConfig {
-    
 
-    
-
-    
-
-    
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
-        return httpSecurity
-            .csrf(AbstractHttpConfigurer::disable)
-            .formLogin(httpForm ->{
-                httpForm.loginPage("/req/login").permitAll();
-                httpForm.defaultSuccessUrl("/index");
-                
-            })
-    
-            
-            .authorizeHttpRequests(registry ->{
-                registry.requestMatchers("/req/signup","/css/**","/js/**").permitAll();
-                registry.anyRequest().authenticated();
-            })
-            .build();
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/login", "/signup", "/css/**", "/js/**", "/pic/**", "/error").permitAll()
+                .requestMatchers("/actuator/health").permitAll()
+                .anyRequest().authenticated())
+            .formLogin(form -> form
+                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/", true)
+                .failureUrl("/login?error")
+                .permitAll())
+            .logout(logout -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID"))
+            .rememberMe(Customizer.withDefaults());
+
+        return http.build();
     }
-    
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider(
+            AppUserDetailsService userDetailsService,
+            PasswordEncoder passwordEncoder) {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
+        provider.setPasswordEncoder(passwordEncoder);
+        return provider;
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+            throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
 }
