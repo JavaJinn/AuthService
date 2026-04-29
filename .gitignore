@@ -17,7 +17,8 @@ README.md
 
 ### Environment Variables ###
 .env
-application-local.yml
+src/main/resources/application-local.yml
 
 # Maven Wrapper
 .mvn/wrapper/maven-wrapper.jar
+

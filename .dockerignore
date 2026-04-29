@@ -1,0 +1,6 @@
+target
+.git
+.vscode
+.env
+*.log
+src/main/resources/application-local.yml

@@ -1,0 +1,17 @@
+spring:
+  thymeleaf:
+    cache: true
+  web:
+    resources:
+      cache:
+        period: 365d
+
+server:
+  error:
+    include-message: never
+    include-binding-errors: never
+    include-stacktrace: never
+
+logging:
+  level:
+    org.springframework.security: WARN

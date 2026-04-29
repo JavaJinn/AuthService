@@ -2,12 +2,10 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Spring Boot-AuthServiceApplication<auth-service>",
+            "name": "Auth Service",
             "request": "launch",
-            "cwd": "${workspaceFolder}",
             "mainClass": "com.javajinn.auth_service.AuthServiceApplication",
             "projectName": "auth-service",
-            "args": "",
             "envFile": "${workspaceFolder}/.env"
         }
     ]
