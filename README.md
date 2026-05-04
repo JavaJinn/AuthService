@@ -2,7 +2,7 @@
 
 Live Demo: (Render link will follow soon)
 
-A portfolio-ready authentication service built with Spring Boot, Spring Security,
+Authentication service built with Spring Boot, Spring Security,
 Thymeleaf, PostgreSQL, Flyway and Docker-ready deployment.
 
 ## Demo Login
