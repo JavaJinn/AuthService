@@ -3,10 +3,13 @@ spring:
     name: auth-service
 
   datasource:
-    url: ${DB_URL:}
-    username: ${DB_USERNAME:}
-    password: ${DB_PASSWORD:}
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
+
+  hikari:
+      maximum-pool-size: 10
 
   jpa:
     hibernate:
@@ -40,3 +43,6 @@ logging:
 app:
   security:
     remember-me-key: ${REMEMBER_ME_KEY}
+
+jwt:
+  secret: ${JWT_SECRET}
