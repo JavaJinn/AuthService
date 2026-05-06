@@ -25,7 +25,6 @@
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         <div>
             <h2>Sign up</h2>
-            <p class="muted">Build a solid auth foundation you can expand later.</p>
         </div>
 
         <div class="alert error" th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
