@@ -11,7 +11,21 @@ Public deployment:
 
 https://authservice-gjvh.onrender.com/login
 
-Available pages:
+It can take a while to load some times
+
+## Available Pages
+
+### Login
+
+```text
+/login
+```
+
+### Signup
+
+```text
+/signup
+```
 
 - `/login`
 - `/signup`
