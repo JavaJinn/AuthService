@@ -13,6 +13,8 @@ Thymeleaf, PostgreSQL, Flyway and Docker-ready deployment.
 
 https://authservice-gjvh.onrender.com/login
 
+It can take a while to load some times
+
 ## Available Pages
 
 ### Login
