@@ -2,7 +2,8 @@
 
 A production-style authentication service built with Spring Boot, PostgreSQL, Docker, and Render deployment.
 
-This project demonstrates secure authentication architecture, environment-based configuration management, containerization, database migrations, and cloud deployment practices.
+Authentication service built with Spring Boot, Spring Security,
+Thymeleaf, PostgreSQL, Flyway and Docker-ready deployment.
 
 ---
 
