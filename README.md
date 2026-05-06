@@ -2,7 +2,8 @@
 
 A production-style Spring Boot authentication web application with PostgreSQL, Flyway migrations, Docker support, and Render deployment.
 
-The project demonstrates how user registration, login, password hashing, database persistence, environment-based configuration, and cloud deployment can be combined in a clean backend application.
+Authentication service built with Spring Boot, Spring Security,
+Thymeleaf, PostgreSQL, Flyway and Docker-ready deployment.
 
 ## Live Demo
 
